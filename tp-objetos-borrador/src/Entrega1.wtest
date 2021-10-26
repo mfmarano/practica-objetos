@@ -10,6 +10,26 @@ describe "Entrega 1 Tests" {
 	
 	}
 	
+	test "Se aplica 25% de descuento a Last Toninas y el precio se reduce a $2625" {
+	
+		lastToninas.aplicarDescuento(25)
+		assert.equals(2625, lastToninas.precio())
+	
+	}
+	
+	test "Se aplica 25% de descuento a Last Toninas y el certificado de descuento forma parte de su equipaje imprescindible" {
+	
+		lastToninas.aplicarDescuento(25)
+		assert.that(lastToninas.equipajeImprescindible().contains("Certificado de descuento"))
+	
+	}
+	
+	test "Silver's Sea no es un destino peligroso" {
+	
+		assert.notThat(barrileteCosmico.esDestinoPeligroso(silverSea))
+	
+	}
+	
 	
 	
 }
