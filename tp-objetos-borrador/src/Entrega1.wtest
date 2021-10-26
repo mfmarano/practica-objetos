@@ -1,0 +1,15 @@
+import Destino.*
+import Agencia.*
+
+describe "Entrega 1 Tests" {
+	
+	test "Garlic´s Sea y Last Toninas forman parte de los destinos más importantes de Barrilete Cósmico" {
+	
+		const destinos = #{ garlicSea, lastToninas }
+		assert.equals(destinos, barrileteCosmico.destinosImportantes().asSet())
+	
+	}
+	
+	
+	
+}
