@@ -1,5 +1,5 @@
 import Destino.*
-import Agencia.*
+import BarrileteCosmico.*
 
 describe "Entrega 1 Tests" {
 	
@@ -24,12 +24,24 @@ describe "Entrega 1 Tests" {
 	
 	}
 	
-	test "Silver's Sea no es un destino peligroso" {
+	test "Silver´s Sea no es un destino peligroso" {
 	
-		assert.notThat(barrileteCosmico.esDestinoPeligroso(silverSea))
+		assert.notThat(silverSea.esDestinoPeligroso())
 	
 	}
 	
+	test "Barrilete Cósmico aplica descuento de 15% a todos sus destinos, sus precios se reducen y todos poseen el certificado de descuento" {
 	
+		barrileteCosmico.aplicarDescuentoADestinos(15)
+		assert.equals(2125, garlicSea.precio())
+		assert.equals(1147.5, silverSea.precio())
+		assert.equals(2975, lastToninas.precio())
+		assert.equals(1275, goodAirs.precio())
+		assert.that(garlicSea.equipajeImprescindible().contains("Certificado de descuento"))
+		assert.that(silverSea.equipajeImprescindible().contains("Certificado de descuento"))
+		assert.that(lastToninas.equipajeImprescindible().contains("Certificado de descuento"))
+		assert.that(goodAirs.equipajeImprescindible().contains("Certificado de descuento"))
+	
+	}
 	
 }

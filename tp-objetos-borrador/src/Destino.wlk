@@ -1,18 +1,18 @@
 class Destino {
-	const nombre
-	const equipajeImprescindible
+	const property nombre
+	const property equipajeImprescindible
 	var precio
 	
 	method precio() {
 		return precio
 	}
 	
-	method nombre() {
-		return nombre
+	method esDestinoDestacado() {
+		return precio > 2000
 	}
 	
-	method equipajeImprescindible() {
-		return equipajeImprescindible
+	method esDestinoPeligroso() {
+		return self.requiereLlevarVacuna()
 	}
 	
 	method aplicarDescuento(porcentaje) {
@@ -25,7 +25,7 @@ class Destino {
 	}
 	
 	method requiereLlevarVacuna() {
-		return self.equipajeImprescindible().any({ objeto => objeto.contains("Vacuna") })
+		return equipajeImprescindible.any({ objeto => objeto.contains("Vacuna") })
 	}
 }
 

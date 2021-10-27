@@ -9,7 +9,7 @@ object barrileteCosmico {
 	}
 	
 	method destinosImportantes() {
-		return self.destinos().filter({ destino => self.esDestinoDestacado(destino) })
+		return self.destinos().filter({ destino => destino.esDestinoDestacado() })
 	}
 	
 	method aplicarDescuentoADestinos(porcentaje) {
@@ -17,19 +17,11 @@ object barrileteCosmico {
 	}
 	
 	method esEmpresaExtrema() {
-		return self.destinosImportantes().any({ destino => self.esDestinoPeligroso(destino) })
+		return self.destinosImportantes().any({ destino => destino.esDestinoPeligroso() })
 	}
 	
 	method cartaDeDestinos() {
 		return self.destinos().map({ destino => destino.nombre() })
-	}
-	
-	method esDestinoDestacado(unDestino) {
-		return unDestino.precio() > 2000
-	}
-	
-	method esDestinoPeligroso(unDestino) {
-		return unDestino.requiereLlevarVacuna()
 	}
 	
 }
