@@ -1,44 +1,45 @@
-import Destino.*
- 
+import BarrileteCosmico.barrileteCosmico
+
 class Usuario {
- 	
- 	var nombre
- 	var saldo
- 	const destinosConocidos = #{}
- 	const seguidos = #{}
- 	
- 	method volarA(unDestino) {
- 		if (self.puedeVolarA(unDestino)) {
- 			self.agregarDestino(unDestino)
- 			saldo -= unDestino.precio()
- 		} else {
- 			throw new Exception(message = "Saldo insuficiente para volar al destino")
- 		}
- 	}
- 	
- 	method kilometros() {
- 		return 0.1 * destinosConocidos.sum({ destino => destino.precio() })
- 	}
- 	
- 	// chequear esto
- 	method seguirA(unUsuario) {
- 		seguidos.add(unUsuario)
- 		unUsuario.seguirA(self)
- 	}
- 	
- 	method puedeVolarA(unDestino) {
- 		return saldo >= unDestino.precio()
- 	}
- 	
- 	method agregarDestino(unDestino) {
- 		destinosConocidos.add(unDestino)
- 	}
- 	
- }
- 
- const pabloHari = new Usuario
- 	(
- 		nombre = "PHari",
- 		saldo = 1500,
- 		destinosConocidos = #{lastToninas, goodAirs}
- 	)
+	
+	const nombre
+	const property viajesRealizados
+	var property localidadOrigen
+	const usuariosQueSigue
+	var saldo
+	
+	method saldo() {
+		return saldo
+	}
+	
+	method viajarA(unaLocalidadDestino) {
+		const viaje = barrileteCosmico.viaje(self.localidadOrigen(), unaLocalidadDestino)
+		
+		if (self.puedeRealizarViaje(viaje)) {
+			viajesRealizados.add(viaje)
+			saldo -= viaje.precio()
+			self.localidadOrigen(unaLocalidadDestino)
+		} else {
+			throw new Exception(message = "Saldo insuficiente para viajar")
+		}
+		
+	}
+	
+	method puedeRealizarViaje(unViaje) {
+		return saldo >= unViaje.precio()
+	}
+	
+	method kilometros() {
+		return viajesRealizados.sum{ viaje => viaje.distanciaEntreOrigenYDestino() }
+	}
+	
+	method seguirA(unUsuario) {
+		self.agregarSeguido(unUsuario)
+		unUsuario.agregarSeguido(self)
+	}
+	
+	method agregarSeguido(unUsuario) {
+		usuariosQueSigue.add(unUsuario)
+	}
+	
+}

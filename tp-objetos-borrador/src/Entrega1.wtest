@@ -1,38 +1,83 @@
-import Destino.*
+import Localidad.*
 import BarrileteCosmico.*
+import Usuario.*
+import MedioDeTransporte.*
+import Viaje.*
 
 describe "Entrega 1 Tests" {
 	
-	test "Garlic´s Sea y Last Toninas forman parte de los destinos más importantes de Barrilete Cósmico" {
+	const garlicSea = new Localidad(
+		nombre = "Garlic's Sea",
+		equipajeImprescindible = #{"Caña de pescar", "Piloto"},
+		precio = 2500,
+		kilometro = 0)
+
+	const silverSea = new Localidad(
+		nombre = "Silver's Sea",
+		equipajeImprescindible = #{"Protector solar", "Equipo de buceo"},
+		precio = 1350,
+		kilometro = 0)
+
+	const lastToninas = new Localidad(
+		nombre = "Last Toninas",
+		equipajeImprescindible = #{"Vacuna gripal", "Vacuna B", "Necronomicon"},
+		precio = 3500,
+		kilometro = 10)
+
+	const goodAirs = new Localidad(
+		nombre = "Good Airs",
+		equipajeImprescindible = #{"Cerveza", "Protector solar"},
+		precio = 1500,
+		kilometro = 0)
 	
+	const avion = new MedioDeTransporte(tiempoPorKilometro = 1, costoPorKilometro = 30)
+	
+	const pabloHari = new Usuario (
+		nombre = "PHari",
+		localidadOrigen = goodAirs,
+		viajesRealizados = #{ new Viaje(origen = goodAirs, destino = lastToninas, medioDeTransporte = avion) },
+		usuariosQueSigue = #{},
+		saldo = 1500)
+	
+	method initialize() {
+		barrileteCosmico.agregarLocalidad(garlicSea)
+		barrileteCosmico.agregarLocalidad(silverSea)
+		barrileteCosmico.agregarLocalidad(lastToninas)
+		barrileteCosmico.agregarLocalidad(goodAirs)
+		barrileteCosmico.agregarUsuario(pabloHari)
+		barrileteCosmico.agregarTransporte(avion)
+	}
+	
+	test "los destinos más importantes de Barrilete Cósmico son Garlic´s Sea y Last Toninas" {
+		
 		const destinos = #{ garlicSea, lastToninas }
-		assert.equals(destinos, barrileteCosmico.destinosImportantes().asSet())
+		assert.equals(destinos, barrileteCosmico.localidadesMasImportantes())	
 	
 	}
 	
-	test "Se aplica 25% de descuento a Last Toninas y el precio se reduce a $2625" {
-	
+	test "Se aplica 25% descuento a Last Toninas y su precio disminuye" {
+		
 		lastToninas.aplicarDescuento(25)
-		assert.equals(2625, lastToninas.precio())
+		assert.equals(2625, lastToninas.precio())	
 	
 	}
 	
-	test "Se aplica 25% de descuento a Last Toninas y el certificado de descuento forma parte de su equipaje imprescindible" {
-	
+	test "Se aplica 25% descuento a Last Toninas y requiere Certificado de descuento" {
+		
 		lastToninas.aplicarDescuento(25)
-		assert.that(lastToninas.equipajeImprescindible().contains("Certificado de descuento"))
+		assert.that(lastToninas.equipajeImprescindible().contains("Certificado de descuento"))	
 	
 	}
 	
-	test "Silver´s Sea no es un destino peligroso" {
-	
-		assert.notThat(silverSea.esDestinoPeligroso())
+	test "Silver's Sea no es un destino peligroso" {
+		
+		assert.notThat(silverSea.esPeligroso())	
 	
 	}
 	
 	test "Barrilete Cósmico aplica descuento de 15% a todos sus destinos, sus precios se reducen y todos poseen el certificado de descuento" {
 	
-		barrileteCosmico.aplicarDescuentoADestinos(15)
+		barrileteCosmico.aplicarDescuentosALocalidades(15)
 		assert.equals(2125, garlicSea.precio())
 		assert.equals(1147.5, silverSea.precio())
 		assert.equals(2975, lastToninas.precio())
@@ -42,6 +87,52 @@ describe "Entrega 1 Tests" {
 		assert.that(lastToninas.equipajeImprescindible().contains("Certificado de descuento"))
 		assert.that(goodAirs.equipajeImprescindible().contains("Certificado de descuento"))
 	
+	}
+	
+	test "Last Toninas es el unico destino peligroso hasta el momento" {
+		
+		const destinoPeligroso = #{ lastToninas }
+		assert.equals(destinoPeligroso, barrileteCosmico.localidades().filter{ destino => destino.esPeligroso() })
+		
+	}
+	
+	test "Barrilete Cósmico es una empresa extrema" {
+		
+		assert.that(barrileteCosmico.esEmpresaExtrema())
+		
+	}
+	
+	test "Last Toninas, Garlic's sea, Good Airs y Silver's Sea es la carta de destinos de Barrilete Cosmico" {
+		
+		const cartaDeDestinos = #{"Last Toninas", "Garlic's Sea", "Good Airs", "Silver's Sea"}
+		assert.equals(cartaDeDestinos, barrileteCosmico.cartaDeLocalidades().asSet())
+		
+	}
+	
+	test "PHari tiene 10 kilómetros (de Good Airs a Last Toninas)" {
+		
+		assert.equals(10, pabloHari.kilometros())
+		
+	}
+	
+	test "PHari puede volar a Silver's Sea" {
+		
+		assert.that(pabloHari.puedeViajarA(silverSea))
+		
+	}
+	
+	test "PHari puede volar a Silver's Sea y disminuye su saldo a 150" {
+		
+		pabloHari.viajarA(silverSea)
+		assert.equals(150, pabloHari.saldo())
+		
+	}
+	
+	test "PHari puede volar a Silver's Sea y es agregado en su historial" {
+		
+		pabloHari.viajarA(silverSea)
+		assert.that(pabloHari.destinosConocidos().contains(silverSea))
+		
 	}
 	
 }

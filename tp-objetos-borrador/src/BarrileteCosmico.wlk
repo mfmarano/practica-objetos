@@ -1,27 +1,47 @@
-import Destino.*
+import Viaje.*
 
 object barrileteCosmico {
 	
-	const destinos = #{ garlicSea, silverSea, lastToninas, goodAirs }
+	const property localidades = #{}
+	const property transportes = []
+	const usuarios = #{}
 	
-	method destinos() {
-		return destinos
+	method viaje(unOrigen, unDestino) {
+		
+		return new Viaje(
+			origen = unOrigen,
+			destino = unDestino,
+			medioDeTransporte = transportes.anyOne()
+		)
+		
 	}
 	
-	method destinosImportantes() {
-		return self.destinos().filter({ destino => destino.esDestinoDestacado() })
+	method localidadesMasImportantes() {
+		return localidades.filter{ localidad => localidad.esDestacado() }
 	}
 	
-	method aplicarDescuentoADestinos(porcentaje) {
-		self.destinos().forEach({ destino => destino.aplicarDescuento(porcentaje) })
+	method aplicarDescuentosALocalidades(porcentaje) {
+		localidades.forEach{ localidad => localidad.aplicarDescuento(porcentaje) }
 	}
 	
 	method esEmpresaExtrema() {
-		return self.destinosImportantes().any({ destino => destino.esDestinoPeligroso() })
+		return localidades.any{ localidad => localidad.esPeligroso() }
 	}
 	
-	method cartaDeDestinos() {
-		return self.destinos().map({ destino => destino.nombre() })
+	method cartaDeLocalidades() {
+		return localidades.map{ localidad => localidad.nombre() }
+	}
+	
+	method agregarLocalidad(unaLocalidad) {
+		localidades.add(unaLocalidad)
+	}
+	
+	method agregarUsuario(unUsuario) {
+		usuarios.add(unUsuario)
+	}
+	
+	method agregarTransporte(unTransporte) {
+		transportes.add(unTransporte)
 	}
 	
 }
