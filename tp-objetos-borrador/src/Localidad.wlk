@@ -9,7 +9,7 @@ class Localidad {
 		return precio
 	}
 	
-	method esDestacado() {
+	method esDestacada() {
 		return precio > 2000
 	}
 	

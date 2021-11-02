@@ -17,7 +17,7 @@ object barrileteCosmico {
 	}
 	
 	method localidadesMasImportantes() {
-		return localidades.filter{ localidad => localidad.esDestacado() }
+		return localidades.filter{ localidad => localidad.esDestacada() }
 	}
 	
 	method aplicarDescuentosALocalidades(porcentaje) {

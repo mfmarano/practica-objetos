@@ -117,7 +117,8 @@ describe "Entrega 1 Tests" {
 	
 	test "PHari puede volar a Silver's Sea" {
 		
-		assert.that(pabloHari.puedeViajarA(silverSea))
+		const viajeASilverSea = new Viaje(origen = pabloHari.localidadOrigen(), destino = silverSea, medioDeTransporte = avion)
+		assert.that(pabloHari.puedeRealizarViaje(viajeASilverSea))
 		
 	}
 	
@@ -128,10 +129,10 @@ describe "Entrega 1 Tests" {
 		
 	}
 	
-	test "PHari puede volar a Silver's Sea y es agregado en su historial" {
+	test "PHari puede volar a Silver's Sea y el viaje se agrega a su historial" {
 		
 		pabloHari.viajarA(silverSea)
-		assert.that(pabloHari.destinosConocidos().contains(silverSea))
+		assert.that(pabloHari.viajesRealizados().any{ viaje => viaje.destino().equals(silverSea) } )
 		
 	}
 	

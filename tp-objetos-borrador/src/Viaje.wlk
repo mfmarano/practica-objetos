@@ -1,7 +1,7 @@
 class Viaje {
 	
 	const origen
-	const destino
+	const property destino
 	const medioDeTransporte
 	
 	method precio() {
