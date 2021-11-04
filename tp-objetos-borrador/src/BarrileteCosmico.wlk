@@ -3,17 +3,16 @@ import Viaje.*
 object barrileteCosmico {
 	
 	const property localidades = #{}
-	const property transportes = []
 	const usuarios = #{}
+	const transportes = []
 	
 	method viaje(unOrigen, unDestino) {
-		
-		return new Viaje(
+		return new Viaje
+		(
 			origen = unOrigen,
 			destino = unDestino,
 			medioDeTransporte = transportes.anyOne()
 		)
-		
 	}
 	
 	method localidadesMasImportantes() {
@@ -25,7 +24,7 @@ object barrileteCosmico {
 	}
 	
 	method esEmpresaExtrema() {
-		return localidades.any{ localidad => localidad.esPeligroso() }
+		return localidades.any{ localidad => localidad.esPeligrosa() }
 	}
 	
 	method cartaDeLocalidades() {

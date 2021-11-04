@@ -1,8 +1,9 @@
 import Localidad.*
 import BarrileteCosmico.*
 import Usuario.*
-import MedioDeTransporte.*
+import Localidad.vacunas
 import Viaje.*
+import MedioDeTransporte.*
 
 describe "Entrega 1 Tests" {
 	
@@ -29,14 +30,14 @@ describe "Entrega 1 Tests" {
 		equipajeImprescindible = #{"Cerveza", "Protector solar"},
 		precio = 1500,
 		kilometro = 0)
-	
-	const avion = new MedioDeTransporte(tiempoPorKilometro = 1, costoPorKilometro = 30)
+		
+	const avion = new MedioDeTransporte(tiempoPorKilometro = 1, costoPorKilometro = 10)
 	
 	const pabloHari = new Usuario (
 		nombre = "PHari",
-		localidadOrigen = goodAirs,
 		viajesRealizados = #{ new Viaje(origen = goodAirs, destino = lastToninas, medioDeTransporte = avion) },
 		usuariosQueSigue = #{},
+		localidadOrigen = lastToninas,
 		saldo = 1500)
 	
 	method initialize() {
@@ -46,6 +47,8 @@ describe "Entrega 1 Tests" {
 		barrileteCosmico.agregarLocalidad(goodAirs)
 		barrileteCosmico.agregarUsuario(pabloHari)
 		barrileteCosmico.agregarTransporte(avion)
+		vacunas.add("Vacuna Gripal")
+		vacunas.add("Vacuna B")
 	}
 	
 	test "los destinos más importantes de Barrilete Cósmico son Garlic´s Sea y Last Toninas" {
@@ -71,7 +74,7 @@ describe "Entrega 1 Tests" {
 	
 	test "Silver's Sea no es un destino peligroso" {
 		
-		assert.notThat(silverSea.esPeligroso())	
+		assert.notThat(silverSea.esPeligrosa())	
 	
 	}
 	
@@ -92,7 +95,7 @@ describe "Entrega 1 Tests" {
 	test "Last Toninas es el unico destino peligroso hasta el momento" {
 		
 		const destinoPeligroso = #{ lastToninas }
-		assert.equals(destinoPeligroso, barrileteCosmico.localidades().filter{ destino => destino.esPeligroso() })
+		assert.equals(destinoPeligroso, barrileteCosmico.localidades().filter{ localidad => localidad.esPeligrosa() })
 		
 	}
 	
@@ -104,13 +107,14 @@ describe "Entrega 1 Tests" {
 	
 	test "Last Toninas, Garlic's sea, Good Airs y Silver's Sea es la carta de destinos de Barrilete Cosmico" {
 		
-		const cartaDeDestinos = #{"Last Toninas", "Garlic's Sea", "Good Airs", "Silver's Sea"}
-		assert.equals(cartaDeDestinos, barrileteCosmico.cartaDeLocalidades().asSet())
+		const cartaDeLocalidades = #{"Last Toninas", "Garlic's Sea", "Good Airs", "Silver's Sea"}
+		assert.equals(cartaDeLocalidades, barrileteCosmico.cartaDeLocalidades().asSet())
 		
 	}
 	
-	test "PHari tiene 10 kilómetros (de Good Airs a Last Toninas)" {
+	test "PHari tiene 10 kilómetros" {
 		
+		// basado en Entrega 2, pabloHari tiene un viaje de goodAirs (km = 0) a lastToninas (km = 10),
 		assert.equals(10, pabloHari.kilometros())
 		
 	}
@@ -122,10 +126,13 @@ describe "Entrega 1 Tests" {
 		
 	}
 	
-	test "PHari puede volar a Silver's Sea y disminuye su saldo a 150" {
+	test "PHari puede volar a Silver's Sea y disminuye su saldo a 50" {
+		
+		// basado en Entrega 2, pabloHari viaja desde lastToninas a silverSea (10km) en avion
+		// precio del viaje: costo de avion (10) * distancia (10) + precio de silverSea (1350) = 1450
 		
 		pabloHari.viajarA(silverSea)
-		assert.equals(150, pabloHari.saldo())
+		assert.equals(50, pabloHari.saldo())
 		
 	}
 	

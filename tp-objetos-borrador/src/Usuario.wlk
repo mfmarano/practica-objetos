@@ -4,33 +4,36 @@ class Usuario {
 	
 	const nombre
 	const property viajesRealizados
-	var property localidadOrigen
 	const usuariosQueSigue
+	var property localidadOrigen
 	var saldo
 	
 	method saldo() {
 		return saldo
 	}
 	
-	method viajarA(unaLocalidadDestino) {
-		const viaje = barrileteCosmico.viaje(self.localidadOrigen(), unaLocalidadDestino)
+	method viajarA(unDestino) {
+		const viaje = barrileteCosmico.viaje(localidadOrigen, unDestino)
 		
 		if (self.puedeRealizarViaje(viaje)) {
+			
 			viajesRealizados.add(viaje)
 			saldo -= viaje.precio()
-			self.localidadOrigen(unaLocalidadDestino)
-		} else {
-			throw new Exception(message = "Saldo insuficiente para viajar")
-		}
+			self.localidadOrigen(unDestino)
 		
+		} else {
+			
+			throw new Exception(message = "Saldo insuficiente para viajar")
+			
+		}
 	}
 	
-	method puedeRealizarViaje(unViaje) {
-		return saldo >= unViaje.precio()
+	method puedeRealizarViaje(viaje) {
+		return saldo >= viaje.precio()
 	}
 	
 	method kilometros() {
-		return viajesRealizados.sum{ viaje => viaje.distanciaEntreOrigenYDestino() }
+		return viajesRealizados.sum{ viaje => viaje.distanciaEntreOrigenYDestino() } 
 	}
 	
 	method seguirA(unUsuario) {
