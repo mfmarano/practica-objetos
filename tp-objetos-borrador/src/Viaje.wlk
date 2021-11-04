@@ -5,7 +5,7 @@ class Viaje {
 	const medioDeTransporte
 	
 	method precio() {
-		return self.distanciaEntreOrigenYDestino() * medioDeTransporte.costoPorKilometro() + destino.precio()
+		return medioDeTransporte.precioDeViaje(origen, destino)
 	}
 	
 	method distanciaEntreOrigenYDestino() {

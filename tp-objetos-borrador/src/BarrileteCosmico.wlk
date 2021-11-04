@@ -6,13 +6,17 @@ object barrileteCosmico {
 	const usuarios = #{}
 	const transportes = []
 	
-	method viaje(unOrigen, unDestino) {
+	method viaje(unOrigen, unDestino, unTransporte) {
 		return new Viaje
 		(
 			origen = unOrigen,
 			destino = unDestino,
-			medioDeTransporte = transportes.anyOne()
+			medioDeTransporte = unTransporte
 		)
+	}
+	
+	method transporte() {
+		return transportes.anyOne()
 	}
 	
 	method localidadesMasImportantes() {
