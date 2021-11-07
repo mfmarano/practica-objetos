@@ -1,0 +1,36 @@
+import ObjetosTests.*
+import BarrileteCosmico.barrileteCosmico
+
+describe "Entrega 2 - Tests" {
+	
+	method initialize() {
+		barrileteCosmico.agregarTransporte(avion)
+	}
+	
+	test "Good Airs se encuentra a 10km de Last Toninas" {
+		assert.equals(10, goodAirs.distanciaA(lastToninas))
+	}
+	
+	test "Last Toninas se encuentra a 10km de Good Airs" {
+		assert.equals(10, lastToninas.distanciaA(goodAirs))
+	}
+	
+	test "marquitosMarano viaja a silverSea y cambia su localidad de origen" {
+		marquitosMarano.viajarA(silverSea)
+		assert.equals(silverSea, marquitosMarano.localidadOrigen())
+	}
+	
+	test "marquitosMarano viaja a silverSea en avion y cambia su saldo" {
+		marquitosMarano.viajarA(silverSea)
+		assert.equals(1450, marquitosMarano.saldo())
+	}
+	
+	test "marquitosMarano viaja a silverSea y se agrega a viajes realizados" {
+		marquitosMarano.viajarA(silverSea)
+		assert.that(
+			marquitosMarano.viajesRealizados().any({ viaje => viaje.destino().equals(silverSea)})
+		)
+	}
+	
+	
+}

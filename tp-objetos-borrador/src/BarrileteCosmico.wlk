@@ -6,17 +6,25 @@ object barrileteCosmico {
 	const usuarios = #{}
 	const transportes = []
 	
-	method viaje(unOrigen, unDestino, unTransporte) {
-		return new Viaje
-		(
-			origen = unOrigen,
-			destino = unDestino,
-			medioDeTransporte = unTransporte
-		)
+	method viaje(unUsuario, unDestino) {
+		
+		const transporte = transportes.anyOne()
+		
+		if (self.puedeRealizarViaje(unUsuario, unDestino, transporte)) {
+			return new Viaje
+			(
+				origen = unUsuario.localidadOrigen(),
+				destino = unDestino,
+				medioDeTransporte = transporte
+			)
+		} else {
+			throw new Exception(message = "Saldo insuficiente para viajar")
+		}
+		
 	}
 	
-	method transporte() {
-		return transportes.anyOne()
+	method puedeRealizarViaje(unUsuario, unDestino, unTransporte) {
+		return unUsuario.saldo() >= unTransporte.precioDeViaje(unUsuario.localidadOrigen(), unDestino)
 	}
 	
 	method localidadesMasImportantes() {

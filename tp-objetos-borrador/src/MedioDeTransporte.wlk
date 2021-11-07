@@ -3,8 +3,8 @@ class MedioDeTransporte {
 	const tiempoPorKilometro
 	const property costoPorKilometro
 	
-	method precioDeViaje(origen, destino) {
-		return origen.distanciaA(destino) * costoPorKilometro + destino.precio()
-	} 
+	method precioDeViaje(unOrigen, unDestino) {
+		return unOrigen.distanciaA(unDestino) * costoPorKilometro + unDestino.precio()
+	}
 	
 }
