@@ -7,13 +7,14 @@ class Usuario {
 	const usuariosQueSigue
 	var property localidadOrigen
 	var saldo
+	var perfil
 	
 	method saldo() {
 		return saldo
 	}
 	
 	method viajarA(unDestino) {
-		const viaje = barrileteCosmico.viaje(self, unDestino)
+		const viaje = barrileteCosmico.viaje(self, unDestino, perfil.transporteConveniente(self, unDestino))
 		viajesRealizados.add(viaje)
 		saldo -= viaje.precio()
 		self.localidadOrigen(unDestino)
@@ -30,6 +31,10 @@ class Usuario {
 	
 	method agregarSeguido(unUsuario) {
 		usuariosQueSigue.add(unUsuario)
+	}
+	
+	method actualizarPerfil(unPerfil) {
+		perfil = unPerfil
 	}
 	
 }

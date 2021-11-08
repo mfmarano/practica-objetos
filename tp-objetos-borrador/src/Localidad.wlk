@@ -41,3 +41,43 @@ class Localidad {
 	}
 	
 }
+
+class Playa inherits Localidad {
+	
+	override method esPeligrosa() {
+		return false
+	}
+	
+}
+
+class Montania inherits Localidad {
+	
+	const altura
+	
+	override method esDestacada() {
+		return true
+	}
+	
+	override method esPeligrosa() {
+		return altura > 5000 && super()
+	}
+	
+}
+
+class CiudadHistorica inherits Localidad {
+	
+	const cantidadDeMuseos
+	
+	override method esDestacada() {
+		return cantidadDeMuseos >= 3 && super()
+	}
+	
+	override method esPeligrosa() {
+		return self.tieneSeguro()
+	}
+	
+	method tieneSeguro() {
+		return equipajeImprescindible.any{ objetoEnEquipaje => objetoEnEquipaje.equals("Seguro de asistencia al viajero") }
+	}
+	
+}
