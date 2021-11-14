@@ -2,11 +2,11 @@ class MedioDeTransporte {
 	
 	const property tiempoPorKilometro
 	
+	method costoPorKilometro()
+	
 	method precioDeViaje(unOrigen, unDestino) {
 		return unOrigen.distanciaA(unDestino) * self.costoPorKilometro() + unDestino.precio()
 	}
-	
-	method costoPorKilometro()
 	
 }
 
@@ -15,7 +15,7 @@ class Avion inherits MedioDeTransporte {
 	const nivelesDeImpulsoTurbinas
 	
 	override method costoPorKilometro() {
-		return nivelesDeImpulsoTurbinas.sum()
+		return nivelesDeImpulsoTurbinas.sum() 
 	}
 	
 }
@@ -31,17 +31,17 @@ class Micro inherits MedioDeTransporte {
 class Tren inherits MedioDeTransporte {
 	
 	override method costoPorKilometro() {
-		return 2300 * 1.6
+		return 1.6 * 2300 
 	}
 	
 }
 
 class Barco inherits MedioDeTransporte {
 	
-	const probabilidadDeChoqueConUnIceberg
+	const probabilidadDeChocarseConUnIceberg
 	
 	override method costoPorKilometro() {
-		return 1000 * probabilidadDeChoqueConUnIceberg
+		return probabilidadDeChocarseConUnIceberg * 1000
 	}
 	
 }

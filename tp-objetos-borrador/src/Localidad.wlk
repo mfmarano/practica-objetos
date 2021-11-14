@@ -33,11 +33,29 @@ class Localidad {
 	}
 	
 	method tieneVacunaEnSuEquipaje() {
-		return equipajeImprescindible.any{ objetoEnEquipaje => vacunas.contains(objetoEnEquipaje) }
+		return vacunas.any { vacuna => self.tiene(vacuna) }
 	}
 	
 	method distanciaA(unaLocalidad) {
 		return (self.kilometro() - unaLocalidad.kilometro()).abs()
+	}
+	
+	method tiene(unItem) {
+		return equipajeImprescindible.contains(unItem)
+	}
+	
+}
+
+class Montania inherits Localidad {
+	
+	const altura
+	
+	override method esPeligrosa() {
+		return altura > 5000 && super()
+	}
+	
+	override method esDestacada() {
+		return true
 	}
 	
 }
@@ -50,34 +68,16 @@ class Playa inherits Localidad {
 	
 }
 
-class Montania inherits Localidad {
-	
-	const altura
-	
-	override method esDestacada() {
-		return true
-	}
-	
-	override method esPeligrosa() {
-		return altura > 5000 && super()
-	}
-	
-}
-
 class CiudadHistorica inherits Localidad {
 	
-	const cantidadDeMuseos
-	
-	override method esDestacada() {
-		return cantidadDeMuseos >= 3 && super()
-	}
+	const museos = #{}
 	
 	override method esPeligrosa() {
-		return self.tieneSeguro()
+		return !self.tiene("Seguro de asistencia al viajero")
 	}
 	
-	method tieneSeguro() {
-		return equipajeImprescindible.any{ objetoEnEquipaje => objetoEnEquipaje.equals("Seguro de asistencia al viajero") }
+	override method esDestacada() {
+		return museos.size() >= 3 && super()
 	}
 	
 }

@@ -21,28 +21,28 @@ object barrileteCosmico {
 		
 	}
 	
+	method puedeRealizarViaje(unUsuario, unDestino, unTransporte) {
+		return unUsuario.saldo() >= unTransporte.precioDeViaje(unUsuario.localidadOrigen(), unDestino)
+	}
+	
+	method transporteMasVeloz() {
+		return self.transporteMasVelozDe(transportes)
+	}
+	
+	method transporteMasVelozDe(unosTransportes) {
+		return transportes.min { transporte => transporte.tiempoPorKilometro() }
+	}
+	
 	method cualquierTransporte() {
 		return transportes.anyOne()
 	}
 	
-	method transporteConMayorVelocidad() {
-		return self.transporteMasRapido(transportes)
+	method transporteAdecuadoPara(unUsuario, unDestino) {
+		return self.transporteMasVelozDe(self.transportesAccesiblesPara(unUsuario, unDestino))
 	}
 	
-	method transporteSegunUsuario(unUsuario, unDestino) {
-		return self.transporteMasRapido(self.transportesAceptablesPorUsuario(unUsuario, unDestino))
-	}
-	
-	method transporteMasRapido(unosTransportes) {
-		return unosTransportes.min {transporte => transporte.tiempoPorKilometro() }
-	}
-	
-	method transportesAceptablesPorUsuario(unUsuario, unDestino) {
+	method transportesAccesiblesPara(unUsuario, unDestino) {
 		return transportes.filter { transporte => self.puedeRealizarViaje(unUsuario, unDestino, transporte) }
-	}
-		
-	method puedeRealizarViaje(unUsuario, unDestino, unTransporte) {
-		return unUsuario.saldo() >= unTransporte.precioDeViaje(unUsuario.localidadOrigen(), unDestino)
 	}
 	
 	method localidadesMasImportantes() {

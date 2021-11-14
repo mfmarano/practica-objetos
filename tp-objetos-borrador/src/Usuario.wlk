@@ -5,19 +5,27 @@ class Usuario {
 	const nombre
 	const property viajesRealizados
 	const usuariosQueSigue
-	var property localidadOrigen
 	var saldo
+	var localidadOrigen
 	var perfil
 	
 	method saldo() {
 		return saldo
 	}
 	
+	method actualizarPerfil(unPerfil) {
+		perfil = unPerfil
+	}
+	
+	method actualizarLocalidadOrigen(unaLocalidad) {
+		localidadOrigen = unaLocalidad
+	}
+	
 	method viajarA(unDestino) {
-		const viaje = barrileteCosmico.viaje(self, unDestino, perfil.transporteConveniente(self, unDestino))
-		viajesRealizados.add(viaje)
-		saldo -= viaje.precio()
-		self.localidadOrigen(unDestino)
+		const viaje = barrileteCosmico.viaje(self, unDestino, perfil.transporteIdeal())
+		self.agregarViaje(viaje)
+		self.descontarSaldo(viaje.precio())
+		self.actualizarLocalidadOrigen(unDestino)
 	}
 	
 	method kilometros() {
@@ -33,8 +41,11 @@ class Usuario {
 		usuariosQueSigue.add(unUsuario)
 	}
 	
-	method actualizarPerfil(unPerfil) {
-		perfil = unPerfil
+	method agregarViaje(unViaje) {
+		viajesRealizados.add(unViaje)
 	}
 	
+	method descontarSaldo(unMontoADescontar) {
+		saldo -= unMontoADescontar
+	}
 }
